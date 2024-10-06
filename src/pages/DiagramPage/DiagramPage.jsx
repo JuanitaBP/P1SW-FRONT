@@ -23,7 +23,8 @@ import { Link, useParams } from 'react-router-dom';
 import { useFetchProject } from '../../hooks/useFetchProject';
 import { updateProject } from '../../helpers/updateProject';
 import { SocketContext } from '../../context/SocketContext';
-//import '../../utils/fileUtils'
+import { exportDiagram, importDiagram } from '../../utils/fileUtils'; // Importar las funciones
+
 
 
 
@@ -53,21 +54,21 @@ export const Diagram = () => {
 
   
  
-  // Función para exportar el diagrama
-  const handleExport = () => {
-    exportDiagram(nodes, edges);
-  };
+// Función para exportar el diagrama
+const handleExport = () => {
+  exportDiagram(nodes, edges);
+};
 
-  // Función para importar el diagrama
-  const handleImport = (event) => {
-    const file = event.target.files[0];
-    importDiagram(file).then((data) => {
-      setNodes(data.nodes);
-      setEdges(data.edges);
-    }).catch((error) => {
-      console.error('Error al importar el diagrama:', error);
-    });
-  };
+// Función para importar el diagrama
+const handleImport = (event) => {
+  const file = event.target.files[0];
+  importDiagram(file).then((data) => {
+    setNodes(data.nodes);
+    setEdges(data.edges);
+  }).catch((error) => {
+    console.error('Error al importar el diagrama:', error);
+  });
+};
 
   useEffect(() => {
     socket.emit('joinRoom', { room: params.id })
